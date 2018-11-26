@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	var twoSum = function(nums, target) {
+	    let res = [];
+	    for(var i = 0; i < nums.length; i++){
+	        for(var j = i + 1; j < nums.length ; j ++){
+	            if(nums[i] + nums[j] === target){
+	                res.push(i);
+	                res.push(j);
+	            }
+	        }
+	    }
+	    return res
+	};
+	var nums = [3, 2, 4],target = 6;
+	console.log(twoSum(nums, target))
+</script>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	function Father(){
+		this.val = 40;
+
+	}
+	Father.prototype.getFatherVal = function(){
+		return this.val;
+	}
+	function Son(){
+		this.sonVal = 20;
+	}
+	//每个构造函数都有一个原型对象,原型对象包含一个指向构造函数的指针;
+	console.log(Father.prototype.constructor === Father) //true
+	//每个实例都包含一个指向原型对象的内部指针
+	var f = new Father();
+	console.log(f.__proto__ === Father.prototype) //true
+
+
+	//让原型对象等于另一个对象的实例,那么此时,原型对象(Son.prototype)将包含一个指向另一个原型的指针(实例包含一个指向原型对象的内部指针);
+	//另一个原型中(Father.prototype)也包含着指向另一个构造函数的指针.
+	//假如,另一个原型又是另一个类型的实例,上述关系依然成立,如此层层递进,就构成了实例与原型的链条.
+	//这就是所谓原型链的概念
+	Son.prototype = new Father();
+	console.log(Son.prototype.__proto__ === Father.prototype)  //true
+	
+	Son.prototype.getSonVal = function(){
+		return this.sonVal
+	}
+	var instance = new Son();
+	console.log(instance)
+	console.log(instance.getFatherVal()) //40
+	//原型链存在的问题:
+	//1.原型中包含引用类型值,会被所有实例共享
+	//2.无法向父类构造函数传参
+</script>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	//前言:
+	//组合模式是最常用的继承模式,单他也有缺点:就是会调用两次父类构造函数
+	//一次是创建子类实例的时候;另一次是在子类型构造函数内部
+
+	//回顾组合继承
+	function F(name){
+		this.name = name;
+		this.arr = [1, 2, 3];
+	}
+	F.prototype.sayName = function(){
+		console.log(this.name);
+	};
+	function S(name, age){
+		F.call(this, name);				//第二次调用F()
+		this.age = age;
+	}
+	S.prototype = new F();				//第一次调用F()
+	S.prototype.constructor = S;
+	S.prototype.sayAge = function(){
+		console.log(this.age)
+	}
+	var o = new S('jack', 17);
+	o.sayName();  //'jack'
+	o.sayAge();   //17
+	//第一次调用F()时,S.prototype会得到两个属性:name和arr;他们都是F()的实例属性,只不过现在位于S()的原型中
+	//当调用S构造函数时,又会调用一次F()构造函数,这一次又在新对象创建实例属性:name和arr;于是,这两个属性就遮蔽了原型中的属性;
+	console.log(o)
+	// {name: "jack", arr: Array(3), age: 17}
+	// 	age: 17
+	// 	arr: (3) [1, 2, 3]
+	// 	name: "jack"
+	// 	__proto__: F
+	// 	arr: (3) [1, 2, 3]
+	// 	constructor: ƒ S(name, age)
+	// 	name: undefined
+	// 	sayAge: ƒ ()
+	// 	__proto__: Object
+
+
+
+	//好在我们已经找到解决这个问题的方法:寄生组合式继承
+	//思想:
+	//借用构造函数来继承属性;通过原型链的混成形式来继承方法
+	//思路:
+	//不必为了指定子类型的原型而调用父类的构造函数,我们所需要的无非就是父类型原型的一个副本而已.
+	//本质上,就是使用寄生式继承来继承父类的原型,然后再讲结果指定给子类型的原型.
+	//基本模式如下:
+	function object(o){
+		function F(){}
+		F.prototype = o;
+		return new F();
+	}
+	function inheritPrototype(s, f){
+		var prototype = object(f.prototype);	//创建对象(创建父类型原型的一个副本)
+		prototype.constructor = s;				//增强对象(为副本添加constructor属性,从而弥补因重写原型而失去默认的constructor属性)
+		s.prototype = prototype;				//指定对象(将副本值赋予子类型的原型)
+	}
+	//这样可以替换前面例子为子类型原型赋值的语句了!
+
+	function F(name){
+		this.name = name;
+		this.arr = [1, 2, 3];
+	}
+	F.prototype.sayName = function(){
+		console.log(this.name);
+	}
+	function S(name, age){
+		F.call(this, name);
+		this.age = age;
+	}
+	inheritPrototype(S, F);
+	S.prototype.sayAge = function(){
+		console.log(this.age)
+	}
+	var s = new S('maria', 35);
+	s.sayName();
+	s.sayAge();
+	console.log(s)
+	//原型中没有创建多余的属性,而且原型链保持不变
+
+	// {name: "maria", arr: Array(3), age: 35}
+	// 	age: 35
+	// 	arr: (3) [1, 2, 3]
+	// 	name: "maria"
+	// 	__proto__: F
+	// 	constructor: ƒ S(name, age)
+	// 	sayAge: ƒ ()
+	// 	__proto__: Object
+</script>
+</html>

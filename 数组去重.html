@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	var arr = [1, 1, 2, 3, 4, 5, 2, 4, 3];
+	//1.set数据结构
+	function f1(arr){
+		return Array.from(new Set(arr));
+	}
+	// console.log(f1(arr));
+	//2.filter + indexOf
+	function f2(arr){
+		return arr.filter((item, index, arr) => arr.indexOf(item) === index)
+	}
+	// console.log(f2(arr));
+	//3.reduce
+	function f3(arr){
+		return arr.sort().reduce(function(init, cur){
+			if(init.length === 0 || init[init.length-1] !== cur){
+				init.push(cur)
+			};
+			return init
+		}, [])
+	}
+	console.log(f3(arr));
+	//4冒泡排序
+	function f4(arr){
+		for(var i = 0; i < arr.length - 1; i++){
+			for(var j = i + 1; j < arr.length - 1; j++){
+				if(arr[j] > arr[j+1]){
+					[arr[j], arr[j+1]] = [arr[j+1], arr[j]]
+				}
+			}
+		}
+		return arr
+	}
+	console.log(f4(arr))
+</script>
+</html>

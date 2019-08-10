@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	var arr = [1, 2, 4, 3, 0];
+	//作为第一次调用 callback函数时的第一个参数的值。 如果没有提供初始值，则将使用数组中的第一个元素。 在没有初始值的空数组上调用 reduce 将报错。
+	var res = arr.reduce(function(pre, cur, index, arr){
+		console.log(pre, cur)
+		return pre + cur
+	});
+	console.log(res)
+</script>
+</html>

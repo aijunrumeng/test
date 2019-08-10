@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	//在调用一个存在的函数时，你可以为其指定一个 this 对象。 this 指当前对象，也就是正在调用这个函数的对象。 使用 apply， 你可以只写一次这个方法然后在另一个对象中继承它，而不用在新对象中重复写该方法。
+	var array = ['a', 'b'];
+	var elements = [0, 1, 2];
+	console.log(array.concat(elements));
+	//concat 返回新的数组
+	console.log(array);
+
+	console.log(array.push.apply(array, elements))
+	console.log(array)
+</script>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	//思想:
+	//与原型式继承紧密相连,创建一个用于封装继承过程的函数,该函数在内部以某种方式来增强对象,最后返回对象
+	function object(o){
+		function F(){};
+		F.prototype = o;
+		return new F();
+	}
+	function createAnother(original){
+		var clone = object(original);		//通过调用函数创建一个新对象
+		clone.sayHi = function(){			//以某种方式增强这个对象
+			console.log('hi');
+		};
+		return clone;						//返回这个对象
+	}
+	
+	var person = {
+		name: 'jack',
+		arr: [1, 2, 3]
+	};
+	var anotherPerson = createAnother(person);
+	anotherPerson.sayHi();
+	anotherPerson.arr.push(4);
+
+	var yetAnotherPerson = createAnother(person);
+	console.log(yetAnotherPerson.arr)   //[1, 2, 3, 4]
+	//缺点:也无法解决引用类型值被所有实例共享的问题
+	
+</script>
+</html>

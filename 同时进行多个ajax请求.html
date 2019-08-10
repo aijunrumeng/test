@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	//1.promise
+	console.log(Date.parse(new Date())/1000)
+	var p1 = new Promise(function(resolve, reject){
+		setTimeout(function(){
+			resolve('1秒钟')
+		}, 1000)
+	})
+	var p2 = new Promise(function(resolve, reject){
+		setTimeout(function(){
+			resolve('2秒钟')
+		}, 2000)
+	})
+	var p3 = new Promise(function(resolve, reject){
+		setTimeout(function(){
+			resolve('3秒钟')
+		}, 3000)
+	});
+	Promise.all([p1, p2, p3]).then(function(res){
+		console.log(res)
+		console.log(Date.parse(new Date())/1000)
+	})
+	//2.jquery
+	//https://www.tianqiapi.com/api/?version=v1
+	var url = 'https://www.tianqiapi.com/api/?version=v1&&city=';
+	var a1 = $.ajax({
+		url: url + '北京',
+		success: function(res){
+			console.log(res)
+		}
+	});
+	var a2 = $.ajax({
+		url: url + '深圳',
+		success: function(res){
+			console.log(res)
+		}
+	});
+	$.when(a1, a2).done(function(){
+		alert('done')
+	})
+</script>
+</html>

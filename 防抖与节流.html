@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<style>
+		body{
+			height: 2000px;
+		}
+	</style>
+</head>
+<body>
+	<button>点我</button>
+</body>
+<script type="text/javascript">
+	//节流
+	function throttle(cb, time){
+		var timer = null;
+		console.log(timer)
+		return function(){
+			console.log(timer)
+			if(!timer){
+				timer = setTimeout(() => {
+					cb();
+					timer = null;
+				}, time)
+			}
+		}
+	}
+	function callback(){
+		console.log('resize')
+	}
+	window.addEventListener('scroll', throttle(callback, 1000), false);
+	//防抖
+	var button = document.querySelector('button');
+	function debounce(cb, time){
+		var timer;
+		return function(){
+			clearTimeout(timer);
+			timer = setTimeout(function timer(){
+				cb();
+			}, time);
+		}
+	}
+	function cb(){
+		console.log('点我了')
+	}
+	button.addEventListener('click', debounce(cb, 1000))
+</script>
+</html>

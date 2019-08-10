@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	//概念
+	//函数:在特定环境执行代码的对象
+
+	//解决原型中包含引用类型值带来问题的过程中,可以借用构造函数的技术(也叫做伪造对象或者经典继承)
+	//即在子类构造函数内部调用父类构造函数,因此通过apply()和call()也可以在将来新创建的对象上执行构造函数
+	//1.1引用类型值带来的问题
+	function F(){
+		this.colors = ['red', 'green', 'blue'];
+	}
+	function S(){
+
+	}
+	S.prototype = new F();
+	var o1 = new S();
+	console.log(o1.colors); //["red", "green", "blue"]
+	o1.colors.push('pink');
+	console.log(o1.colors); //["red", "green", "blue", "pink"]
+	var o2 = new S();
+	console.log(o2.colors);	//["red", "green", "blue", "pink"]
+	
+
+	//解决方法
+	function Sup(){
+		this.arr = [1, 2, 3]
+	}
+	function Sub(){
+		Sup.call(this)
+	};
+	var instance = new Sub();
+	console.log(instance.arr); // [1, 2, 3]
+	instance.arr.push(4);
+	console.log(instance.arr); // [1, 2, 3, 4]
+	var instance2 = new Sub();
+	console.log(instance2.arr) //// [1, 2, 3]
+	//这样就不存在原型中包含引用之类值得问题了
+
+	//1.2传递参数
+	function Suptype(name){
+		this.name = name;
+	}
+	function Subtype(){
+		Suptype.call(this, 'jack');
+		this.age = 24;
+	}
+	var ins = new Subtype();
+	console.log(ins);
+	// Subtype {name: "jack", age: 24}
+	// 	age: 24
+	// 	name: "jack"
+	// 	__proto__: Object
+
+	//借用构造函数存在的问题
+	//1.方法都在构造函数中定义,因此函数复用就无从谈起了
+	//2.在父类原型定义的方法,对子类型而言是不可见的结果所有类型都只能使用构造函数模式
+	function Ff(){
+		this.age = 2;
+	}
+	Ff.prototype.getAge = function(){
+		return this.age;
+	}
+	function Ss(){
+		Ff.call(this);
+	}
+	var os = new Ss();
+	console.log(os);//{age: 2}
+	os.getAge()     //Uncaught TypeError: os.getAge is not a function
+	//无法调用父类原型中的方法
+
+</script>
+</html>

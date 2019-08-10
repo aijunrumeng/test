@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	
+</body>
+<script type="text/javascript" charset="utf-8" async defer>
+	//.匹配任意单个字符,但是行结束符除外\n \r \u2028 \u2029;
+	var str1 = 'yes make my day';
+	var reg1 = /.y/g;
+	//match返回匹配组成的数组,如果没有全局标志g,则只匹配一次
+	console.log(str1.match(reg1))  //["my", "ay"]
+
+	//\d,匹配任意阿拉伯数字  等价于[0-9];
+	var reg2 = /[0-9]/g;
+	var str2 = '1234asdf';
+	console.log(str2.match(reg2))  //["1", "2", "3", "4"]
+
+	//\D匹配任意一个不是阿拉伯数字,等价于 [^0-9];
+	var reg3 = /\D/;
+	var str3 = 'asd4$$';
+	console.log(str3.match(reg3)) //["a", index: 0, input: "asd4$$", groups: undefined]
+
+	//\w,匹配任意来自基本拉丁字母中的字母数字字符,包括下划线.等价于[A-Za-z0-9_];
+	var reg4 = /\w/;
+	var str4 = '$1.88';
+	console.log(str4.match(reg4)) //["1", index: 1, input: "$1.88", groups: undefined]
+
+	//\W匹配任意不是基本拉丁字母中的字符(字母数字芐划线),等价于[^A-Za-z0-9_];
+	var reg5 = /\W/;
+	var str5 = '$1.2';
+	console.log(str5.match(reg5)) //["$", index: 0, input: "$1.2", groups: undefined]
+
+	//\s匹配一个空白符,包括空格,制表符,换页符,换行符和其他Unicode空格
+	var reg6 = /\s/;
+	var str6 = 'hello world';
+	console.log(str6.replace(reg6, ''));//'hello world'
+	console.log(str6.match(reg6))  //[" ", index: 5, input: "hello world", groups: undefined]
+
+	//\S匹配一个非空白符
+	var reg7 = /\S/;
+	var str7 = 'hello world';
+	console.log(str7.match(reg7)) //["h", index: 0, input: "hello world", groups: undefined]
+
+	//[xyz],一个字符集合,也叫字符组,匹配集合中任意一个字符,可以使用连字符'-'指定一个范围.
+	//例如[abc]等价于[a-c]
+	var reg8 = /[abc]/;
+	var str8 = 'ajaxbc';
+	console.log(str8.match(reg8)); 		//["a", index: 0, input: "ajaxbc", groups: undefined]
+	console.log(str8.match(/[abc]/g));  //["a", "a", "b", "c"]
+
+	//[^abc]一个反义或补充字符集,也叫反义字符组,匹配不在括号内的字符,也可以通过连字符'-'指定一个范围内的字符
+	var reg9 = /[^a-c]/;
+	var str9 = 'ajaxbc';
+	console.log(str9.match(reg9)) 		//["j", index: 1, input: "ajaxbc", groups: undefined]
+	console.log(str9.match(/[^abc]/g))  //["j", "x"]
+
+	//边界
+	//^匹配输入开始
+
+	var reg10 = /^a/;
+	var str10 = 'An apple';
+	console.log(str10.match(reg10))  //null
+	console.log(str10.match(/^A/))  //["A", index: 0, input: "An apple", groups: undefined]
+
+	//$匹配输入结束
+
+	var reg11 = /a$/;
+	var str11 = 'ta';
+	console.log(str11.match(reg11)) //["a", index: 1, input: "ta", groups: undefined]
+	console.log('tat'.match(reg11)) //null
+
+	//\b匹配一个零宽单词边界, 如一个字母和一个空格之间
+
+	var reg12 = /\bno/;
+	var str12 = 'at  nooatn';
+	console.log(str12.match(reg12)) //["no", index: 3, input: "at noon", groups: undefined]
+	console.log(str12.match(/at\b/g)) //["at", index: 0, input: "at noon", groups: undefined] 只匹配边界
+
+	//\B匹配一个零宽非单词边界,如两个字母之间或者两个空格之间
+
+	var reg13 = /\Bno/;
+	var str13 = 'at noono';
+	console.log(str13.match(reg13))  //null
+	console.log(str13.match(/\Bat/)) //null
+	console.log(str13.match(/\Bon/)) //["on", index: 5, input: "at noon", groups: undefined]
+	console.log(str13.match(/\bon/)) //null
+	console.log(str13.match(/\bno/)) //["no", index: 3, input: "at noono", groups: undefined]
+
+
+	//分组与反向引用
+	//(x)匹配x并捕获匹配项,这被称为捕获括号
+	var reg14 = /(foo)/;
+	var str14 = 'foo bar';
+	console.log(str14.match(reg14)) //["foo", "foo", index: 0, input: "foo bar", groups: undefined]
+	console.log(reg14.exec(str14))  //["foo", "foo", index: 0, input: "foo bar", groups: undefined]
+
+	//\n n是一个正整数,一个反向引用,指向正则表达式中第n个括号中匹配的子字符串
+	var reg15 = /apple(,)\sorange\1/;
+	var str15 = 'apple, orange, cherry; peach';
+	console.log(str15.match(reg15))  //["apple, orange,", ",", index: 0, input: "apple, orange, cherry, peach", groups: undefined]
+	
+	//(?:x)匹配x不会捕获匹配项,称为非捕获括号
+	var reg16 = /(?:foo)/;
+	var str16 = 'foo bar';
+	console.log(str16.match(reg16)) //["foo", index: 0, input: "foo bar", groups: undefined]
+
+	//数量词
+	//x* 匹配前面的模式x零次或多次
+	console.log('hello world'.match(/el*/))  //["ell", index: 1, input: "hello world", groups: undefined]
+	//x+ 匹配前面模式x一次或多次,等价于{1,}
+	console.log('hello world'.match(/l+/))  //["ll", index: 2, input: "hello world", groups: undefined]
+	//x*?和前面* + 一样匹配前面的模式x,然而匹配是最小可能匹配
+	console.log('hello hello'.match(/lo*?/)) //["l", index: 2, input: "hello hello", groups: undefined]
+	console.log('hello hello'.match(/lo+?/)) //["lo", index: 3, input: "hello hello", groups: undefined]
+	console.log('hello hello'.match(/lo*/)) //["l", index: 3, input: "hello hello", groups: undefined]
+	//x?匹配前面的x0次或1次
+	console.log('angle'.match(/e?le?/))  //["le", index: 3, input: "angle", groups: undefined]
+	console.log('angle'.match(/e?le/))  //["le", index: 3, input: "angle", groups: undefined]
+	//如果在数量词*+?或{}之后紧跟?会使数量词变为非贪婪,即匹配次数最小化.反之默认情况下,是贪婪模式的
+
+	//x(?=y)仅当x后面紧跟着y时才会匹配x
+	console.log('hello'.match(/l(?=l)/))  //["l", index: 2, input: "hello", groups: undefined]
+	console.log('liangchen'.match(/liang(?=chen)/))  //["liang", index: 0, input: "liangchen", groups: undefined]
+	//x(?!y)仅当x后面不是紧跟着y是才匹配x,例如匹配小数点后面的数字
+	console.log('3.141'.match(/\d+(?!\.)/)) //["141", index: 2, input: "3.141", groups: undefined]
+	//x|y匹配x或y
+	console.log('hello'.match(/h|o/))  //["h", index: 0, input: "hello", groups: undefined]
+	console.log('hello'.match(/s|o/))  //["o", index: 0, input: "hello", groups: undefined]
+	//x{n} n是一个正整数,表示前面的模式出现n次才匹配
+	console.log('hello'.match(/l{2}/))  //["ll", index: 2, input: "hello", groups: undefined]
+	console.log('hello'.match(/l{1}/))  //["l", index: 2, input: "hello", groups: undefined]
+	console.log('hello'.match(/l{3}/))  //null
+	//x{n,}表示前面的模式至少出现n次是才匹配,但是匹配所有
+	console.log('hellllo'.match(/l{3,}/)) //["llll", index: 2, input: "hellllo", groups: undefined]
+	//x{n, m}表示前面的模式至少出现n次最多出现m次才匹配
+	console.log('hellllo'.match(/l{1,4}/)) //["llll", index: 2, input: "hellllo", groups: undefined]
+	console.log('hellllo'.match(/l{1,5}/)) //["llll", index: 2, input: "hellllo", groups: undefined]
+	console.log('hellllo'.match(/l{1,3}/)) //["lll", index: 2, input: "hellllo", groups: undefined]
+
+	//断言
+	//x(?=y)仅匹配被y跟随的x
+	//x(?!y)仅匹配不被y跟随的x
+
+
+	//截取url参数
+	var url = 'www.baidu.com?a=1&b=1&c=1';
+	
+</script>
+</html>

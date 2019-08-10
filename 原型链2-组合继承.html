@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	//组合继承有时也叫伪经典继承,指的是将原型链和构造函数的技术组合到一块,发挥二者之长的一种继承模式
+	//思想:
+	//使用原型链实现对原型属性和方法的继承,通过构造函数来实现对实例属性的继承
+	//这样,既通过在原型上定义方法实现了函数复用,又能够保证每个实例都有他自己的属性
+
+	function F(name){
+		this.name = name;
+		this.arr = [1, 2, 3]
+	}
+	F.prototype.sayName = function(){
+		console.log(this.name);
+	}
+	function S(name, age){
+		F.call(this, name);
+		this.age = age;
+	}
+	S.prototype.test = function(){
+		console.log('test')
+	}
+	S.prototype = new F();
+	console.log(S.prototype.constructor);//指向F(父类构造函数)
+	S.prototype.constructor = S;         //作用:纠正原型链指向?
+	console.log(S.prototype.constructor);//指向S(自身原型链)
+	S.prototype.sayAge = function(){
+		console.log(this.age);
+	}
+	var o1 = new S('jack', 24);
+	o1.arr.push(4);
+	console.log(o1.arr);//[1, 2, 3, 4]
+	o1.sayName();		//'jack'
+	o1.sayAge();		//24
+	// console.log(S.prototype)
+	// o1.test();       
+	//报错 Uncaught TypeError: o1.test is not a function
+
+	var o2 = new S('rose', 22);
+	console.log(o2.arr);//[1, 2, 3]
+	o2.sayName();		//'rose'
+	o2.sayAge();		//22
+</script>
+</html>

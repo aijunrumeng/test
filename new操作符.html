@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	//例如在执行var a = new A()时
+	//JavaScript(在内存中创建对象之后,和运行函数A()把this指向对象之前)
+	//设置a.[[Prototype]] = A.prototype(把原型对象的引用复制到实例的内部)
+	//因此,当执行
+	function Foo(){};
+	var o = new Foo()
+	//javascript实际上执行的是
+	var o = new Object();
+	o.__proto__ = Foo.prototype;
+	Foo.call(o);
+
+	//打印
+	console.log(o)
+
+</script>
+</html>

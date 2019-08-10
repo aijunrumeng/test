@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	//思想:
+	//基于已有的对象创建新的对象
+	
+	function object(o){
+		function F(){}
+		F.prototype = o;
+		return new F();
+	}
+	var person = {
+		name: 'jack',
+		arr: [1, 2, 3, 4]
+	};
+	var anotherPerson = object(person);
+	anotherPerson.name = 'rose';
+	anotherPerson.arr.push(5);
+
+	var yetAnotherPerson = object(person);
+	yetAnotherPerson.name = 'linda';
+	yetAnotherPerson.arr.push(0);
+
+	console.log(person.arr);  //[1, 2, 3, 4, 5, 0]
+
+	//缺点:无法解决引用类型值被共享的问题
+</script>
+</html>

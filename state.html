@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<style type="text/css" media="screen">
+		
+	</style>
+</head>
+<body>
+	
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<script type="text/javascript">
+	class Foo{
+		constructor(props){
+			// super(props)
+			this.state = {
+				date: new Date()
+			}
+		}
+		// state = {
+		// 	test: "test"
+		// }
+	}
+	var foo = new Foo();
+	console.log(foo);
+	console.log(foo.hasOwnProperty("state"));
+	class Bar extends Foo{
+		constructor(props){
+			//子类的构造函数必须执行一次super
+			super(props)
+		}
+		//新写法，也是实例属性
+		props = {
+			props:"props"
+		}
+		toSomething(){
+			console.log(this.__proto__.hasOwnProperty("props"))
+			console.log(this.props)
+		}
+	}
+	Bar.prototype.props = "prop"
+	var bar = new Bar();
+	console.log(bar.__proto__ === Bar.prototype) //true
+	console.log(bar.__proto__ === Object.getPrototypeOf(bar))//true
+	console.log(Bar.prototype)
+	bar.toSomething()
+	console.log(bar);
+	console.log(bar.hasOwnProperty("prop")) //false
+	console.log(bar.hasOwnProperty("props")) //true
+	console.log(bar.hasOwnProperty("state")) //true
+	console.log(bar.hasOwnProperty("toSomething")) //false
+</script>
+</html>

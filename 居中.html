@@ -1,62 +1,90 @@
+<!--
+ * @Date: 2020-04-26 13:56:57
+ * @LastEditors: liangchen
+ * @LastEditTime: 2020-05-22 15:53:32
+-->
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title></title>
-	<link rel="stylesheet" href="">
-	<style>
-		.box{
-			display: flex;
-		}
-		.outer{
-			width: 200px;
-			height: 200px;
-			border: 1px solid #000;
-		}
-		.inner{
-			width: 50px;
-			height: 50px;
-			border: 1px solid #000;
-		}
-		.one-o{
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		
-}		.two-o{
-			position: relative;
-		}
-		.two-i{
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-		}
-		.three-o{
-			position: relative;
-		}
-		.three-i{
-			position: absolute;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			margin: auto;
-		}
-	</style>
-</head>
-<body>
-	<div class="box">
-		<div class="outer one-o">
-			<div class="inner one-i"></div>
-		</div>
-		<div class="outer two-o">
-			<div class="inner two-i"></div>
-		</div>
-		<div class="outer three-o">
-			<div class="inner three-i"></div>
-		</div>
-	</div>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <link rel="stylesheet" href="" />
+    <style>
+      .box {
+        display: flex;
+      }
+      .outer {
+        width: 200px;
+        height: 200px;
+        border: 1px solid #000;
+      }
+      .inner {
+        width: 50px;
+        height: 50px;
+        border: 1px solid #000;
+      }
+      .one-o {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .two-o {
+        position: relative;
+      }
+      .two-i {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .three-o {
+        position: relative;
+      }
+      .three-i {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+      }
+      div.parent {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      div.parent {
+        position: relative;
+      }
+      div.child {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      /* 或 */
+      div.child {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="outer one-o">
+        <div class="inner one-i"></div>
+      </div>
+      <div class="outer two-o">
+        <div class="inner two-i"></div>
+      </div>
+      <div class="outer three-o">
+        <div class="inner three-i"></div>
+      </div>
+    </div>
+  </body>
 </html>
